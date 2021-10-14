@@ -1,0 +1,22 @@
+package main
+
+import (
+	"net/http"
+
+	"github.com/justinas/nosurf"
+)
+
+func CreateCSRFToken(next http.Handler) http.Handler {
+	csrfHandler := nosurf.New(next)
+	csrfHandler.SetBaseCookie(http.Cookie{
+		HttpOnly: true,
+		Path:     "/",
+		Secure:   app.SecureMode,
+		SameSite: http.SameSiteLaxMode,
+	})
+	return csrfHandler
+}
+
+func SessionLoad(next http.Handler) http.Handler{
+	return sessions.LoadAndSave(next)
+}
