@@ -1,0 +1,77 @@
+{{template "Base".}}
+
+{{define "Title"}}About{{end}}
+
+{{define "Content"}}
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand ms-5" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 me-5 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/about">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Rooms
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/lux">Lux class</a></li>
+                        <li><a class="dropdown-item active" href="/regular">Regular</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="/reservation" class="nav-link">Book Now</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contacts" class="nav-link active">Contacts</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+</nav>
+
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header">
+            Make reservation
+        </div>
+        <form method="post" action="" class="needs-validation" novalidate>
+        <div class="card-body">
+            <div class="input-group ">
+                <label class="input-group-text" for="first_name">First name:</label>
+                <input type="text" name="first_name" id="first_name" class="form-control" required autocomplete="off">
+            </div>
+            <div class="input-group mt-2">
+                <label class="input-group-text" for="last_name">Last name:</label>
+                <input type="text" name="last_name" id="last_name" class="form-control" required autocomplete="off">
+            </div>
+            <div class="input-group mt-2">
+                <label class="input-group-text" for="email">Email:</label>
+                <input type="email" name="email" id="email" class="form-control" required autocomplete="off">
+            </div>
+            <div class="input-group mt-2">
+                <label class="input-group-text" for="Phone">Phone:</label>
+                <input type="text" name="phone" id="phone" class="form-control" required autocomplete="off">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-submit btn-success">Make Reservation</button>
+        </div>
+        </form>
+    </div>
+</div>
+
+{{end}}

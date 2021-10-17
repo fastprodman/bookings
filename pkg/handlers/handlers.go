@@ -47,3 +47,19 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 		StrMap: stMap,
 	})
 }
+
+func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "reservation.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) Regular(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "regular.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) Lux(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "lux.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) MRes(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "make-reservation.page.tmpl", &models.TemplateData{})
+}

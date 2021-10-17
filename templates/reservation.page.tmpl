@@ -1,0 +1,123 @@
+{{template "Base".}}
+
+{{define "CSS"}}
+<!-- Datepicker -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker-bulma.min.css">
+<!-- Notie -->
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+<style>
+    .datepicker{
+        z-index: 10000;
+    }
+</style>
+{{end}}
+
+{{define "Title"}}Reservation{{end}}
+
+{{define "Content"}}
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand ms-5" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 me-5 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/about">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Rooms
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/lux">Lux class</a></li>
+                        <li><a class="dropdown-item active" href="/regular">Regular</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="/reservation" class="nav-link">Book Now</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contacts" class="nav-link">Contacts</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+</nav>
+
+<div class="container w-50 mt-5">
+    <div class="card">
+        <div class="card-body text-center">
+            <h1>Search for Avalability</h1>
+            <form action="/reservation" method="post" data-date="Today"  id="range-picker" class="needs-validation" novalidate>
+                <div class="input-group has-validation">
+                    <span class="input-group-text">From</span>
+                    <input type="text" autocomplete="off" placeholder="Enter starting date" name="start-date" aria-label="First day"
+                        class="form-control" required>
+                    <span class="input-group-text">to</span>
+                    <input type="text"  autocomplete="off" placeholder="Enter ending date" name="end-date" aria-label="Last day"
+                        class="form-control" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please choose a day.
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <button type="submit" class="btn btn-outline-success btn-block mt-2">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="container">
+    <button class="btn btn-outline-info" id="notification">Notify</button>
+</div> -->
+{{end}}
+
+{{define "JS"}}
+<script>
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+
+<!-- Datepicker -->
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/js/datepicker-full.min.js"></script>
+
+<!-- Notie -->
+<script src="https://unpkg.com/notie"></script>
+
+<!-- sweetalerts -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/static/js/datepicker.js"></script>
+<script src="/static/js/reservation.js"></script>
+{{end}}

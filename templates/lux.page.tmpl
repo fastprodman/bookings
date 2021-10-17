@@ -1,0 +1,109 @@
+{{template "Base".}}
+
+{{define "Title"}}Lux{{end}}
+
+{{define "CSS"}}
+<!-- Datepicker -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker-bulma.min.css">
+<!-- Notie -->
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+<style>
+    .datepicker{
+        z-index: 10000;
+    }
+</style>
+{{end}}
+
+{{define "Content"}}
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand ms-5" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 me-5 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/about">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Rooms
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item active" href="/lux">Lux class</a></li>
+                        <li><a class="dropdown-item" href="/regular">Regular</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="/reservation" class="nav-link">Book Now</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contacts" class="nav-link">Contacts</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+</nav>
+
+
+
+<div class="container my-5">
+    <div class="card">
+        <img class="card-img-top" src="static/images/generals-quarters.png" alt="Card image cap">
+        <div class="card-body text-center">
+            <h5 class="card-title">Luxuarry Rooms</h5>
+            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias harum nam optio
+                natus asperiores cum
+                iusto hic adipisci animi! Eos dicta, quaerat numquam iusto veritatis asperiores voluptate velit,
+                labore inventore neque obcaecati unde voluptatibus ut officia voluptatem consequuntur maiores
+                architecto!</p>
+            <a href="#" class="btn btn-primary " id="notification">Reservate Now !</a>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "JS"}}
+<script>
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+
+<!-- Datepicker -->
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/js/datepicker-full.min.js"></script>
+
+<!-- Notie -->
+<script src="https://unpkg.com/notie"></script>
+
+<!-- sweetalerts -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="/static/js/reservation.js"></script>
+{{end}}

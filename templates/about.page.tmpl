@@ -1,32 +1,38 @@
 {{template "Base".}}
+
+{{define "Title"}}About{{end}}
+
 {{define "Content"}}
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand ms-5" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav ms-auto mb-2 me-5 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link " aria-current="page" href="#">Home</a>
+          <a class="nav-link" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="#">Link</a>
+          <a class="nav-link active" href="/about">About</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Rooms
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="/lux">Lux class</a></li>
+            <li><a class="dropdown-item active" href="/regular">Regular</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
+          <a href="/reservation" class="nav-link">Book Now</a>
+        </li>
+        <li class="nav-item">
+          <a href="/contacts" class="nav-link">Contacts</a>
         </li>
       </ul>
       <form class="d-flex">
@@ -34,16 +40,18 @@
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
-  </div>
 </nav>
-<div>
-  <h1>{{index .StrMap "test"}}</h1>
-  <h2>
-    {{if ne (index .StrMap "remote_ip") ""}}
-      Ip of the user is: {{index .StrMap "remote_ip"}}
-    {{else}}
-      Wisit home page!
-    {{end}}
-  </h2>
+
+<div class="container my-5">
+  <div class="card">
+    <div class="card-body text-center">
+      <h5 class="card-title">About Us</h5>
+      <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias harum nam optio
+        natus asperiores cum
+        iusto hic adipisci animi! Eos dicta, quaerat numquam iusto veritatis asperiores voluptate velit,
+        labore inventore neque obcaecati unde voluptatibus ut officia voluptatem consequuntur maiores
+        architecto!</p>
+    </div>
+  </div>
 </div>
 {{end}}
