@@ -48,23 +48,43 @@
         <div class="card-header">
             Make reservation
         </div>
-        <form method="post" action="" class="needs-validation" novalidate>
-        <div class="card-body">
+        {{$res := index .Data "reservation"}}
+        <form method="post" action="/make-reservation"  class="" novalidate>
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+            <div class="card-body has-validation">
+            {{with .Form.Errors.Get "first-name"}}
+                <div class="text-danger">{{.}}</div>
+            {{end}}
             <div class="input-group ">
-                <label class="input-group-text" for="first_name">First name:</label>
-                <input type="text" name="first_name" id="first_name" class="form-control" required autocomplete="off">
+                <label class="input-group-text" for="first-name">First name:</label>
+                <input type="text" name="first-name" value="{{$res.FirstName}}" id="first_name" class="form-control {{with .Form.Errors.Get "first-name"}} is-invalid {{end}}" required autocomplete="off">
             </div>
+            {{with .Form.Errors.Get "last-name"}}
+                <div class="text-danger">{{.}}</div>
+            {{end}}
             <div class="input-group mt-2">
-                <label class="input-group-text" for="last_name">Last name:</label>
-                <input type="text" name="last_name" id="last_name" class="form-control" required autocomplete="off">
+                <label class="input-group-text" for="last-name">Last name:</label>
+                <input type="text" name="last-name" id="last_name" value="{{$res.LastName}}" class="form-control {{with .Form.Errors.Get "last-name"}} is-invalid {{end}}" required autocomplete="off">
             </div>
+            {{with .Form.Errors.Get "email"}}
+                <div class="text-danger">{{.}}</div>
+            {{end}}
             <div class="input-group mt-2">
                 <label class="input-group-text" for="email">Email:</label>
-                <input type="email" name="email" id="email" class="form-control" required autocomplete="off">
+                <input type="email" name="email" id="email" value="{{$res.Email}}" class="form-control {{with .Form.Errors.Get "email"}} is-invalid {{end}}" required autocomplete="off">
             </div>
+            {{with .Form.Errors.Get "phone"}}
+                <div class="text-danger">{{.}}</div>
+            {{end}}
             <div class="input-group mt-2">
-                <label class="input-group-text" for="Phone">Phone:</label>
-                <input type="text" name="phone" id="phone" class="form-control" required autocomplete="off">
+                <label class="input-group-text" for="phone">Phone:</label>
+                <input type="text" name="phone" id="phone" value="{{$res.Phone}}" class="form-control {{with .Form.Errors.Get "phone"}} is-invalid {{end}}" required autocomplete="off">
+            </div>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please choose a day.
             </div>
         </div>
         <div class="card-footer">
@@ -74,4 +94,28 @@
     </div>
 </div>
 
+{{end}}
+
+{{define "JS"}}
+<script>
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
 {{end}}

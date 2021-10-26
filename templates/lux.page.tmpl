@@ -74,6 +74,51 @@
 {{end}}
 
 {{define "JS"}}
+
+<script>
+    let noty = document.getElementById('notification').addEventListener("click", function () {
+    let html = `
+    <form action="/reservation-json" method="post" data-date="Today" id="res-form" class="needs-validation" novalidate>
+                    <div class="input-group has-validation" id="range-picker1">
+                        <span class="input-group-text">From</span>
+                        <input type="text" autocomplete="off" id="start" placeholder="Enter starting date" name="start-date" aria-label="First day"
+                            class="form-control" required>
+                        <span class="input-group-text">to</span>
+                        <input type="text"  autocomplete="off" id="end" placeholder="Enter ending date" name="end-date" aria-label="Last day"
+                            class="form-control" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a day.
+                        </div>
+                    </div>
+    </form>
+                
+    `
+    attention.custome({
+        content: html,
+        title: 'Pick a date',
+        callback: function(result){
+            console.log("called");
+
+            let form = document.getElementById("res-form");
+            let formData = new FormData(form);
+            formData.append("csrf_token", "{{.CSRFToken}}");
+
+            fetch('/reservation-json',{
+                method: "post",
+                body: formData,
+            })
+            .then(responce => responce.json())
+            .then(data => {
+                console.log(data.ok);
+                console.log(data.message);
+            })
+        }});
+})
+</script>
+
 <script>
     (function () {
         'use strict'

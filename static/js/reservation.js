@@ -1,28 +1,3 @@
-let noty = document.getElementById('notification').addEventListener("click", function () {
-    let html = `
-    <form action="reservation.html" method="get" data-date="Today" id="range-picker1" class="needs-validation" novalidate>
-                    <div class="input-group has-validation">
-                        <span class="input-group-text">From</span>
-                        <input type="text" autocomplete="off" id="start" placeholder="Enter starting date" name="start-date" aria-label="First day"
-                            class="form-control" required>
-                        <span class="input-group-text">to</span>
-                        <input type="text"  autocomplete="off" id="end" placeholder="Enter ending date" name="end-date" aria-label="Last day"
-                            class="form-control" required>
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
-                        <div class="invalid-feedback">
-                            Please choose a day.
-                        </div>
-                    </div>
-                    <div class="row m-2">
-                        <button type="submit" class="btn btn-outline-success btn-block mt-2">Search</button>
-                    </div>
-                </form>
-                
-    `
-    attention.custome({content: html, title: 'Pick a date'});
-})
 
 // Module code
 
@@ -88,7 +63,7 @@ function prompt() {
             title = "",
         } = c;
 
-        const { value: formValues } = await Swal.fire({
+        const { value: result } = await Swal.fire({
             title: title,
             html: content,
             focusConfirm: false,
@@ -111,8 +86,18 @@ function prompt() {
             }
         })
         
-        if (formValues) {
-            Swal.fire(JSON.stringify(formValues))
+        if(result){
+            if(result.dismiss !== Swal.DismissReason.cancel){
+                if(result.value !== ""){
+                    if(c.callback !== undefined){
+                        c.callback(result);
+                    }
+                }else{
+                    c.callback(false);
+                }
+            }else{
+                c.callback(false);
+            }
         }
     }
 

@@ -1,0 +1,39 @@
+{{template "Base".}}
+{{define "Title"}}Summary{{end}}
+
+{{define "Content"}}
+    {{$res := index .Data "reservation"}}
+<div class="container w-50 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <table class="table table-striped">
+                    <thead></thead>
+                    <tbody>
+                        <tr>
+                            <td>Name:</td>
+                            <td>{{$res.FirstName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Last Name:</td>
+                            <td>{{$res.LastName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td>{{$res.Email}}</td>
+                        </tr>
+                        <tr>
+                            <td>Phone:</td>
+                            <td>{{$res.Phone}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="container">
+    <button class="btn btn-outline-info" id="notification">Notify</button>
+</div> -->
+{{end}}

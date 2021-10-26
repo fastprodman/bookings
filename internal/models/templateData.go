@@ -1,5 +1,7 @@
 package models
 
+import "github.com/stasxgaming/bookings/internal/forms"
+
 type TemplateData struct {
 	StrMap    map[string]string
 	IntMap    map[string]int
@@ -9,4 +11,5 @@ type TemplateData struct {
 	Flash     string
 	Warning   string
 	Error     string
+	Form      *forms.Form
 }

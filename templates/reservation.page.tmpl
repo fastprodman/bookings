@@ -59,8 +59,9 @@
     <div class="card">
         <div class="card-body text-center">
             <h1>Search for Avalability</h1>
-            <form action="/reservation" method="post" data-date="Today"  id="range-picker" class="needs-validation" novalidate>
-                <div class="input-group has-validation">
+            <form action="/reservation" method="post" data-date="Today"   class="needs-validation" novalidate>
+                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                <div class="input-group has-validation " id="range-picker">
                     <span class="input-group-text">From</span>
                     <input type="text" autocomplete="off" placeholder="Enter starting date" name="start-date" aria-label="First day"
                         class="form-control" required>
@@ -88,6 +89,8 @@
 {{end}}
 
 {{define "JS"}}
+
+
 <script>
     (function () {
         'use strict'
@@ -119,5 +122,4 @@
 <!-- sweetalerts -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/static/js/datepicker.js"></script>
-<script src="/static/js/reservation.js"></script>
 {{end}}

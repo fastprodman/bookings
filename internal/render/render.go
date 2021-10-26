@@ -7,8 +7,9 @@ import (
 	"path/filepath"
 	"text/template"
 
-	"github.com/stasxgaming/bookings/pkg/config"
-	"github.com/stasxgaming/bookings/pkg/models"
+	"github.com/justinas/nosurf"
+	"github.com/stasxgaming/bookings/internal/config"
+	"github.com/stasxgaming/bookings/internal/models"
 )
 
 var app *config.AppConfig
@@ -19,11 +20,15 @@ func GetNewTemplates(a *config.AppConfig) {
 
 var functions = template.FuncMap{}
 
-func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
+	td.Flash = app.Session.PopString(r.Context(), "flash")
+	td.Error = app.Session.PopString(r.Context(), "error")
+	td.Warning = app.Session.PopString(r.Context(), "warning")
+	td.CSRFToken = nosurf.Token(r)
 	return td
 }
 
-func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
 	tempCash := app.TemplateCashe
 
 	t, ok := tempCash[tmpl]
@@ -32,7 +37,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData)
 	}
 
 	byteBuf := new(bytes.Buffer)
-	td = AddDefaultData(td)
+	td = AddDefaultData(td, r)
 
 	err := t.Execute(byteBuf, td)
 	if err != nil {
