@@ -2,6 +2,7 @@ package render
 
 import (
 	"bytes"
+	"fmt"
 	"log"
 	"net/http"
 	"path/filepath"
@@ -13,6 +14,7 @@ import (
 )
 
 var app *config.AppConfig
+var pathToTemplates = "./templates"
 
 func GetNewTemplates(a *config.AppConfig) {
 	app = a
@@ -41,7 +43,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *mod
 
 	err := t.Execute(byteBuf, td)
 	if err != nil {
-		log.Println("Shit happend")
+		log.Println("error executing bytes buffer")
 	}
 
 	_, _ = byteBuf.WriteTo(w)
@@ -50,7 +52,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *mod
 func CreateTemplateCashe() (map[string]*template.Template, error) {
 	pageCashe := make(map[string]*template.Template)
 
-	pages, err := filepath.Glob("./templates/*.page.tmpl")
+	pages, err := filepath.Glob(fmt.Sprintf("%s/*.page.tmpl", pathToTemplates))
 	if err != nil {
 		return pageCashe, err
 	}
@@ -64,13 +66,13 @@ func CreateTemplateCashe() (map[string]*template.Template, error) {
 			return pageCashe, err
 		}
 
-		layouts, err := filepath.Glob("./templates/*.layout.tmpl")
+		layouts, err := filepath.Glob(fmt.Sprintf("%s/*.layout.tmpl", pathToTemplates))
 		if err != nil {
 			return pageCashe, err
 		}
 
 		if len(layouts) > 0 {
-			ts, err := ts.ParseGlob("./templates/*.layout.tmpl")
+			ts, err := ts.ParseGlob(fmt.Sprintf("%s/*.layout.tmpl", pathToTemplates))
 			if err != nil {
 				return pageCashe, err
 			}
