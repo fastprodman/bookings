@@ -8,19 +8,25 @@ import (
 
 	"github.com/stasxgaming/bookings/internal/config"
 	"github.com/stasxgaming/bookings/internal/forms"
+	"github.com/stasxgaming/bookings/internal/helpers"
 	"github.com/stasxgaming/bookings/internal/models"
 	"github.com/stasxgaming/bookings/internal/render"
+	"github.com/stasxgaming/bookings/internal/repository"
+	"github.com/stasxgaming/bookings/internal/repository/dbrepo"
+	"github.com/stasxgaming/bookings/internal/driver"
 )
 
 var Repo *Repository
 
 type Repository struct {
 	App *config.AppConfig
+	DB repository.DatabaseRepo
 }
 
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, d *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB: dbrepo.NewPostgresRepo(a, d.SQL),
 	}
 }
 
@@ -32,24 +38,14 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	var stMap = make(map[string]string)
 	stMap["test"] = "That is Home page"
 
-	remoteIp := r.RemoteAddr
-	m.App.Session.Put(r.Context(), "remote_ip", remoteIp)
-
 	render.RenderTemplate(w, r, "main.page.tmpl", &models.TemplateData{
 		StrMap: stMap,
 	})
 }
 
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
-	var stMap = make(map[string]string)
-	stMap["test"] = "That is about page"
 
-	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
-	stMap["remote_ip"] = remoteIP
-
-	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{
-		StrMap: stMap,
-	})
+	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
@@ -83,7 +79,7 @@ func (m *Repository) MRes(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostMRes(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
 	}
 
 	reservation := models.Reservation{
@@ -126,7 +122,7 @@ func (m *Repository) ReservationJson(w http.ResponseWriter, r *http.Request) {
 
 	out, err := json.MarshalIndent(respo, "", "    ")
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
 	}
 
 	log.Println(string(out))
@@ -137,9 +133,9 @@ func (m *Repository) ReservationJson(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
 	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
 	if !ok {
-		log.Println("cannot get item from session")
+		m.App.ErrorLog.Println("Can not get item from session")
 		m.App.Session.Put(r.Context(), "error", "Can't get reservation from session")
-		http.Redirect(w,r,"/", http.StatusTemporaryRedirect)
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
 	data := make(map[string]interface{})

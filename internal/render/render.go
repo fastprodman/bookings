@@ -2,8 +2,8 @@ package render
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"path/filepath"
 	"text/template"
@@ -30,12 +30,12 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 	return td
 }
 
-func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) error {
 	tempCash := app.TemplateCashe
 
 	t, ok := tempCash[tmpl]
 	if !ok {
-		log.Fatal("not ok")
+		return errors.New("cant get template cahse (func RenderTemplate)")
 	}
 
 	byteBuf := new(bytes.Buffer)
@@ -43,10 +43,11 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *mod
 
 	err := t.Execute(byteBuf, td)
 	if err != nil {
-		log.Println("error executing bytes buffer")
+		return err
 	}
 
 	_, _ = byteBuf.WriteTo(w)
+	return nil
 }
 
 func CreateTemplateCashe() (map[string]*template.Template, error) {
